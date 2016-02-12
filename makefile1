@@ -1,0 +1,18 @@
+CC=gcc
+CFLAGS=-O3 -fPIC -Wno-error=deprecated-declarations
+MALLOC_VERSION=FF
+WDIR=/Users/davies/Desktop/HW1
+
+all: lib mymalloc_test
+
+lib: my_malloc.o
+	$(CC) $(CFLAGS) -shared -g -o libmymalloc.so my_malloc.o
+
+mymalloc_test: mymalloc_test.c
+	$(CC) $(CFLAGS) -I$(WDIR) -L$(WDIR) -D$(MALLOC_VERSION) -Wl,-rpath,$(WDIR) -g -o $@ mymalloc_test.c -lmymalloc 
+
+clean:
+	rm -f *~ *.o mymalloc_test
+
+clobber:
+	rm -f *~ *.o
